@@ -1,18 +1,33 @@
- package com.consultacep;
+package com.consultacep;
 
+import java.util.Scanner;
 import com.consultacep.services.ConsultaCEPClient;
 
 public class Main {
-     public static void main(String[] args) {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        ConsultaCEPClient consulta = new ConsultaCEPClient();
 
-     ConsultaCEPClient consulta = new ConsultaCEPClient();
+        String cep;
 
-     String cepTeste = "30840500";
+        do {
+            System.out.print("Informe o CEP para consulta (Ou 'n' para sair): ");
+            cep = scan.nextLine();
 
-     try {
-      consulta.ConsultaClient(cepTeste);  
-     } catch(Exception e) {
-       System.out.println(e);
-      }   
-     }
- }
+            if (cep.equalsIgnoreCase("n")) {
+                System.out.println("Encerrando...");
+                break;
+            }
+
+            try {
+                consulta.ConsultaClient(cep);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+        } while (!cep.equalsIgnoreCase("n"));
+
+        scan.close();
+
+    }
+}
