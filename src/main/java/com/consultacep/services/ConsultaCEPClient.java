@@ -19,8 +19,7 @@ public class ConsultaCEPClient {
         .build();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    String json = response.body();
-    endereco = gson.fromJson(json, Endereco.class);
+    endereco = gson.fromJson(response.body(), Endereco.class);
 
     System.out.println("========== RELATÓRIO ==========");
     System.out.println("CEP: " + cep);
