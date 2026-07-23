@@ -1,28 +1,37 @@
- package com.consultacep.services;
+package com.consultacep.services;
 
- import java.net.URI;
- import java.net.http.HttpClient;
- import java.net.http.HttpRequest;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import com.google.gson.Gson;
 
-import com.google.gson.JsonObject;
+public class ConsultaCEPClient {
 
- public class ConsultaCEPClient { 
- 
-     public void ConsultaClient(String cep) throws Exception{
+  Gson gson = new Gson();
+  Endereco endereco = new Endereco();
 
-     HttpClient client = HttpClient.newHttpClient();
+  public void ConsultaClient(String cep) throws Exception {
+    HttpClient client = HttpClient.newHttpClient();
 
-      HttpRequest request = HttpRequest.newBuilder()
-       .uri(URI.create("http://viacep.com.br/ws/" + cep + "/json/"))
-       .build();
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create("http://viacep.com.br/ws/" + cep + "/json/"))
+        .build();
 
-     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-      String json = response.body();
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    String json = response.body();
+    endereco = gson.fromJson(json, Endereco.class);
 
-     System.out.println(json); 
+    System.out.println("========== RELATÓRIO ==========");
+    System.out.println("CEP: " + cep);
+    System.out.println("Logadouro: " + endereco.getLogradouro());
+    System.out.println("Bairro: " + endereco.getBairro());
+    System.out.println("Localidade: " + endereco.getLocalidade());
+    System.out.println("UF: " + endereco.getUF());
+    System.out.println("Região: " + endereco.getRegiao());
+    System.out.println("DDD: " + endereco.getDDD());
+    System.out.println("===============================");
 
-     }
-
+  }
 
 }
