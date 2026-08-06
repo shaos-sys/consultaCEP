@@ -19,16 +19,19 @@ public class ConsultaCEPClient {
         .build();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    endereco = gson.fromJson(response.body(), Endereco.class);
+
+     JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
+     String logadouro = json.get("logadouro").getAsString();
+     
 
     System.out.println("========== RELATÓRIO ==========");
     System.out.println("CEP: " + cep);
-    System.out.println("Logadouro: " + endereco.getLogradouro());
-    System.out.println("Bairro: " + endereco.getBairro());
-    System.out.println("Localidade: " + endereco.getLocalidade());
-    System.out.println("UF: " + endereco.getUF());
-    System.out.println("Região: " + endereco.getRegiao());
-    System.out.println("DDD: " + endereco.getDDD());
+    System.out.println("Logadouro: " 
+    System.out.println("Bairro: " + 
+    System.out.println("Localidade: " + 
+    System.out.println("UF: " + 
+    System.out.println("Região: " + 
+    System.out.println("DDD: " + 
     System.out.println("===============================");
 
   }
